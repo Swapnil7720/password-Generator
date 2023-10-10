@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ten Cards Example</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .card {
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 16px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .card-text {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-container">
+        <!-- Card 1 -->
+        <div class="card">
+            <img src="https://placekitten.com/300/150" alt="Card Image 1">
+            <div class="card-content">
+                <h2 class="card-title">Card Title 1</h2>
+                <p class="card-text">This is a simple card with some text content. You can customize it as needed.</p>
+            </div>
+        </div>
+
+        <!-- Repeat the card structure for the next 9 cards -->
+
+        <!-- Card 2 -->
+        <div class="card">
+            <img src="https://placekitten.com/300/150" alt="Card Image 2">
+            <div class="card-content">
+                <h2 class="card-title">Card Title 2</h2>
+                <p class="card-text">This is another card with different content.</p>
+            </div>
+        </div>
+
+        <!-- Repeat the card structure for the next 8 cards -->
+
+        <!-- Card 3 -->
+        <div class="card">
+            <img src="https://placekitten.com/300/150" alt="Card Image 3">
+            <div class="card-content">
+                <h2 class="card-title">Card Title 3</h2>
+                <p class="card-text">Yet another card with its own unique content.</p>
+            </div>
+        </div>
+
+        <!-- Repeat the card structure for the next 7 cards -->
+
+        <!-- Continue this pattern until you have 10 cards -->
+    </div>
+
+</body>
+</html>
