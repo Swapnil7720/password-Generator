@@ -25,8 +25,7 @@ const Cdemo = () => {
   const generatedPassword = useMemo(() => generatePassword(length, numberAllowed, charAllowed), [
     length,
     numberAllowed,
-    charAllowed,
-  ]);
+   ]);
 
   useEffect(() => {
     // Additional side effects can be placed here if needed
@@ -65,15 +64,19 @@ const Cdemo = () => {
           </div>
 
           <div className="flex items-center gap-x-1">
+
             <input
               type="checkbox"
               defaultChecked={numberAllowed}
               id="numberInput"
               onChange={() => {
-                setNumbrAllowed((prev) => !prev);
+              setNumbrAllowed((prev) => !prev);
+
               }}
             />
-            <label htmlFor="numberInput"> Numbers </label>
+            <label 
+            htmlFor="numberInput"
+            > Numbers </label>
           </div>
 
           <div className="flex items-center gap-x-1">

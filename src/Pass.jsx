@@ -1,127 +1,107 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useId } from 'react'
 
 const Pass = () => {
 
-    console.log("Pass component render ")
+    const passwordRef = useRef()
 
-    const[length, setLength] = useState(8)
+    const[password, setPassword] = useState('')
+    const[length, setLength] = useState(5)
+    const[numberAllowed, setNumberAllowed] = useState(false)
+    const[charAllowed, setCharAllowed]= useState(false)
 
-    const[ numberAllowed, setNumbrAllowed] = useState(true)
+    const passwordGenerator = useCallback( ()=>{
 
-    const[ charAllowed, setCharAllowed] = useState(true)
-     
-    const[ password, setPassword] = useState("")
+        let pass = ' ';
+        let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        if(numberAllowed) str += "0123456789"
+        if(charAllowed) str+= "!@#$%^&*-_+=[]{}~`"
 
+        for(let i =0; i< length; i++){
 
-    const passWordRef  = useRef( null)
+            let char = Math.floor( Math.random()  * str.length +  1)
 
+            pass += str.charAt(char)
 
-    const PasswordGenerator =  useCallback(()=>{
-
-        let pass = '';
+        }
         
-        let str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        setPassword(pass);
+        
+        // console.log(password)
 
-        if(numberAllowed) str += "1234567890";
+    }, [ length, charAllowed, numberAllowed]  );
 
-        if(charAllowed) str += "!@#$%^&*()_+{}:><?~";
+    useEffect(()=>{
+        passwordGenerator()
+    },[ setPassword, length, charAllowed, numberAllowed] )
 
-            for (let i = 1; i <= length; i++) {
-
-                let char = Math.floor( Math.random() * str.length + 1 );
-
-                       pass +=  str.charAt(char)
-
-                //  console.log(pass);
-            }
-
-            setPassword(pass)
-
-}  ,[length, numberAllowed, charAllowed, setPassword, password] )  
-
-
-            useEffect( ()=>{
-
-                PasswordGenerator();
-
-            }, [length, numberAllowed, charAllowed, setPassword]);
-
-            const copyToClipBoard =   useCallback( () =>{
-
-                passWordRef.current?.select()
-
-                window.navigator.clipboard.writeText(password)
-            },[password]  )
-    
+    const copyToClip=  useCallback(   () =>{
+        passwordRef.current?.select();
+        window.navigator.clipboard.writeText(password);
+        passwordRef.current?.setSelectionRange(0 , 6  );
+    }, [password] )
+ 
   return (
-    
 
     <>
+    <div className="w-full max-w-md mx-auto shadow-lg rounded-lg px-4 py-3 my-8 text-orange-500 bg-gray-600">
+      <h2 className="text-white mx-auto text-center py-2">Password Generator</h2>
 
-    <div className='p-5 bg-slate-500 w-3/6  text-center  justify-center m-auto my-10 '>
+      <div className="flex shadow rounded-lg overflow-hidden mb-4">
+        <input
+          type="text"   
+          value={password}
+          readOnly
+          className="outline-none w-full py-1 px-3"
+          placeholder="Password"
+          ref={passwordRef}
+        />
 
-            <h2 className='text-white'> Password Generator</h2>
-        <div className='  justify-center align-middle' >
+        <button onClick={copyToClip} className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0">Copy</button>
+      </div>
 
-            <div className=' flex w-full'>
-            <input type="text" 
-
-            value={password}
-            className='outline-none w-full  text-orange-500 py-1 px-3'
-            placeholder="Password"
-            readOnly
-            ref={passWordRef}
-             />
-
-             <button  onClick={copyToClipBoard} className='outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0'>
-              Copy
-             </button>
-
-               {/* <button className=' bg-blue-500 p-2'> Copy</button> */}
-            </div>
-
-            <div  className='flex justify-center align-middle gap-3 text-orange-400' >
-                <input onChange={ (e)=> setLength(e.target.value)} type="range" min={4} max={20} />
-
-                <label > length : {length}</label>
-
-                <div>
-                    <input type="checkbox"     onChange={ ()=> {
-                         setNumbrAllowed( (prev)=> !prev);
-
-                         }} id='number'
-
-                         defaultChecked= {numberAllowed}
-
-                        />
-
-                    <label htmlFor="number" > Numbers</label>
-                </div>
-                <div>
-                    <input type="checkbox"  
-                    id='Character' 
-
-                    defaultChecked = {charAllowed}
-                    
-                    onChange={ ()=> {
-                        setCharAllowed( (prev)=> !prev);
-                    
-                   }}
-                   /> 
-                    <label htmlFor="Character"> Character</label>
-                </div>
-            </div>
-
-            
-
-
+      <div className="flex text-sm gap-x-2">
+        <div className="flex items-center gap-x-1">
+          <input
+            type="range"
+            min={6}
+            max={100}
+            onChange={(e)=>{
+                setLength(e.target.value)
+            }}
+           
+            className="cursor-pointer"
+  
+          />
+          <label> Length : {length}</label>
         </div>
 
+        <div className="flex items-center gap-x-1">
+
+          <input
+            type="checkbox"
+            id="numberInput"
+           onChange={()=>{
+            setNumberAllowed( (prev)=> !prev    )
+           }}   
+          />
+          <label 
+          htmlFor="numberInput"
+          > Numbers </label>
+        </div>
+
+        <div className="flex items-center gap-x-1">
+          <input
+            type="checkbox"
+            id="charInput"
+            onChange={()=>{
+                setCharAllowed( (prev)=> !prev    )
+               }} 
+          />
+          <label htmlFor="charInput"> Character </label>
+        </div>
+      </div>
     </div>
-
-
-    
-    </>
+  </>
   )
 }
 
